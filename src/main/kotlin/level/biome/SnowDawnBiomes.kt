@@ -31,7 +31,6 @@ object SnowDawnBiomes {
                     BiomeEffects.Music(SoundEvent.MUSIC_NETHER_BASALT_DELTAS.namespace(), 12000, 24000, true)
                 )
             )
-            .precipitation(Biome.Precipitation.SNOW)
             .temperature(0.0F)
             .build()
         MinecraftServer.getBiomeManager().addBiome(SNOW_LAND)
