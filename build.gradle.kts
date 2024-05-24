@@ -17,7 +17,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 
     // Minestom
-    compileOnly("com.github.bea4dev:Minestom:4e95c5d6a7")
+    compileOnly("com.github.bea4dev:Minestom:c2dc171bc1")
 
     // VanillaSource
     compileOnly("com.github.bea4dev:VanillaSource:bde9b50560")
