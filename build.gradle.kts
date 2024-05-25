@@ -16,11 +16,8 @@ repositories {
 dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 
-    // Minestom
-    compileOnly("com.github.bea4dev:Minestom:c2dc171bc1")
-
     // VanillaSource
-    compileOnly("com.github.bea4dev:VanillaSource:bde9b50560")
+    compileOnly("com.github.bea4dev:VanillaSource:95f3fd82d6")
 
     // Noise
     implementation("de.articdive:jnoise-pipeline:4.1.0")
