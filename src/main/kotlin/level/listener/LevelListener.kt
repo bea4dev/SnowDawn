@@ -14,8 +14,4 @@ private fun registerLevelLoadListener() {
         event.instance.weather = Weather.RAIN
         event.instance.time = 6000
     }
-    MinecraftServer.getGlobalEventHandler().addListener(PlayerBlockBreakEvent::class.java) { event ->
-        val position = event.blockPosition
-        event.player.sendMessage("${event.instance.getSkyLight(position.blockX(), position.blockY(), position.blockZ())}")
-    }
 }
