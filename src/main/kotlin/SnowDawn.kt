@@ -1,6 +1,7 @@
 import com.github.bea4dev.vanilla_source.plugin.VanillaSourcePlugin
 import level.biome.SnowDawnBiomes
 import level.generator.registerGenerators
+import level.generator.structure.initStructures
 import level.listener.registerLevelListener
 
 class SnowDawn: VanillaSourcePlugin {
@@ -9,6 +10,8 @@ class SnowDawn: VanillaSourcePlugin {
         println("Starting SnowDawn")
 
         SnowDawnBiomes.init()
+
+        initStructures()
 
         registerGenerators()
 

@@ -5,6 +5,7 @@ import de.articdive.jnoise.generators.noise_parameters.fade_functions.FadeFuncti
 import de.articdive.jnoise.generators.noisegen.opensimplex.FastSimplexNoiseGenerator
 import de.articdive.jnoise.pipeline.JNoise
 import level.biome.SnowDawnBiomes
+import level.generator.structure.structures
 import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.generator.GenerationUnit
 import net.minestom.server.instance.generator.Generator
@@ -89,6 +90,7 @@ class SnowLandGenerator(seed: Long): Generator {
             .scale(0.02)
             .build()
     }
+    private val tower1 = structures["tower1"]
 
 
     override fun generate(unit: GenerationUnit) {

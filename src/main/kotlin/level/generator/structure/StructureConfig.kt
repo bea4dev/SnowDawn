@@ -1,32 +1,26 @@
 package level.generator.structure
 
-import SnowDawn
-import com.github.bea4dev.vanilla_source.Resources
+import cc.ekblad.toml.TomlMapper
+import cc.ekblad.toml.tomlMapper
+import com.github.bea4dev.vanilla_source.config.DefaultTomlConfig
 import com.github.bea4dev.vanilla_source.config.TomlConfig
 import com.github.bea4dev.vanilla_source.server.level.util.BlockPosition
-import com.github.michaelbull.result.unwrap
-import java.io.File
-
-val STRUCTURE_CONFIG_MAP = run {
-    val filePathStr = "structures/snow_land.toml"
-    val file = File(filePathStr)
-    if (!file.exists()) {
-        Resources.savePluginResource(filePathStr, false, SnowDawn::class.java)
-    }
-
-    val map = mutableMapOf<String, StructureConfig>()
-    val files = File("structures").listFiles()!!
-    for (configFile in files) {
-        val config = TomlConfig.load<StructureConfig>(configFile).unwrap()
-        map[configFile.name] = config
-    }
-
-    map
-}
 
 data class StructureConfig(
-    val name: String,
     val position1: BlockPosition,
     val position2: BlockPosition,
     val ignoreAir: Boolean
-): TomlConfig
+): TomlConfig {
+    companion object: DefaultTomlConfig {
+        override fun default(): TomlConfig {
+            return StructureConfig(BlockPosition(0, 0, 0), BlockPosition(0, 0, 0), true)
+        }
+
+        override fun mapper(): TomlMapper {
+            return tomlMapper {
+                "ignore_air" to "ignoreAir"
+            }
+        }
+
+    }
+}
