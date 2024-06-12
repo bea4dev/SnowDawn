@@ -1,3 +1,4 @@
 position1 = { x = 0, y = 0, z = 0 }
-position2 = { x = 0, y = 0, z = 0 }
+position2 = { x = 1, y = 1, z = 2 }
 ignore_air = true
+offset = { x = 0, y = 0, z = 0 }

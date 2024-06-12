@@ -1,12 +1,17 @@
 package level.generator.structure
 
 import com.github.bea4dev.vanilla_source.server.level.util.BlockPosition
+import net.minestom.server.coordinate.BlockVec
 import net.minestom.server.instance.Instance
 import net.minestom.server.instance.block.Block
 
 class Structure(level: Instance, val name: String, config: StructureConfig) {
-    val blockMap: Map<BlockPosition, Block>
-    val ignoreAir: Boolean = config.ignoreAir
+    private val blockMap: Map<BlockPosition, Block>
+    private val ignoreAir: Boolean = config.ignoreAir ?: true
+    private val offset: BlockPosition = config.offset
+    val x: Int
+    val y: Int
+    val z: Int
 
     init {
         val p1 = config.position1
@@ -22,13 +27,40 @@ class Structure(level: Instance, val name: String, config: StructureConfig) {
         for (x in startX..endX) {
             for (y in startY..endY) {
                 for (z in startZ..endZ) {
-                    val block = level.getBlock(x, y, z)
-                    blockMap[BlockPosition(x, y, z)] = block
+                    val position = BlockVec(x, y, z)
+                    var chunk = level.getChunkAt(position)
+                    if (chunk == null) {
+                        chunk = level.loadChunk(BlockVec(x, y, z)).join()
+                    }
+                    val block = chunk!!.getBlock(position)
+                    blockMap[BlockPosition(x - startX, y - startY, z - startZ)] = block
                 }
             }
         }
 
         this.blockMap = blockMap
+
+        x = endX - startX + 1
+        y = endY - startY + 1
+        z = endZ - startZ + 1
+    }
+
+    fun getBlock(x: Int, y: Int, z: Int, height: Int): Block? {
+        val sx = x.mod(this.x) - offset.x
+        val sy = y - height - offset.y
+        val sz = z.mod(this.z) - offset.z
+
+        if (sx < 0 || this.x < sx || sy < 0 || this.y < sy || sz < 0 || this.z < sz) {
+            return null
+        }
+
+        val block = blockMap[BlockPosition(sx, sy, sz)]
+
+        return if (ignoreAir && block?.isAir == true) {
+            null
+        } else {
+            block
+        }
     }
 
 }

@@ -10,7 +10,7 @@ import java.util.stream.Collectors
 
 val structures = run {
     val filePathStr = "structures/test.toml"
-    val dirPathStr = "structure"
+    val dirPathStr = "structures"
     val dir = File(dirPathStr)
     if (!dir.exists()) {
         dir.mkdirs()
@@ -21,7 +21,7 @@ val structures = run {
     val files = File("structures").listFiles()!!
     for (configFile in files) {
         val config = TomlConfig.load<StructureConfig>(configFile).unwrap()
-        map[configFile.name] = config
+        map[configFile.nameWithoutExtension] = config
     }
 
     val level = Level.load("asset_level").unwrap()

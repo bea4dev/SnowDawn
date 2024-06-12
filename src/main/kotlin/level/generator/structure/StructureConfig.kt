@@ -9,11 +9,17 @@ import com.github.bea4dev.vanilla_source.server.level.util.BlockPosition
 data class StructureConfig(
     val position1: BlockPosition,
     val position2: BlockPosition,
-    val ignoreAir: Boolean
+    val offset: BlockPosition,
+    val ignoreAir: Boolean?
 ): TomlConfig {
     companion object: DefaultTomlConfig {
         override fun default(): TomlConfig {
-            return StructureConfig(BlockPosition(0, 0, 0), BlockPosition(0, 0, 0), true)
+            return StructureConfig(
+                BlockPosition(0, 0, 0),
+                BlockPosition(0, 0, 0),
+                BlockPosition(0, 0, 0),
+                true
+            )
         }
 
         override fun mapper(): TomlMapper {
