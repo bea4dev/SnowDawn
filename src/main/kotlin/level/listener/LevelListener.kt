@@ -2,7 +2,6 @@ package level.listener
 
 import net.minestom.server.MinecraftServer
 import net.minestom.server.event.instance.InstanceRegisterEvent
-import net.minestom.server.event.player.PlayerBlockBreakEvent
 import net.minestom.server.instance.Weather
 
 fun registerLevelListener() {

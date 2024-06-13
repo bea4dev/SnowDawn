@@ -14,6 +14,7 @@ import net.minestom.server.instance.block.Block
 import net.minestom.server.instance.generator.GenerationUnit
 import net.minestom.server.instance.generator.Generator
 import kotlin.math.floor
+import kotlin.math.min
 
 private class SnowLandGeneratorVariables(seed: Long) {
     val baseNoise: JNoise = JNoise.newBuilder()
@@ -140,10 +141,10 @@ private class SnowLandGeneratorVariables(seed: Long) {
             return ::evaluate
         }
 
-        val tower1Placement = Placement(tower1, towerEvaluator1(tower1.x, tower1.z, 10))
-        val tower2Placement = Placement(tower2, towerEvaluator1(tower2.x, tower2.z, 8))
-        val tower3Placement = Placement(tower3, towerEvaluator1(tower3.x, tower3.z, 4))
-        val tower4Placement = Placement(tower4, towerEvaluator1(tower4.x, tower4.z, 2))
+        val tower1Placement = Placement(tower1, towerEvaluator1(tower1.x, tower1.z, 20))
+        val tower2Placement = Placement(tower2, towerEvaluator1(tower2.x, tower2.z, 15))
+        val tower3Placement = Placement(tower3, towerEvaluator1(tower3.x, tower3.z, 12))
+        val tower4Placement = Placement(tower4, towerEvaluator1(tower4.x, tower4.z, 8))
 
         xzStructurePlacements = XZStructurePlacements(listOf(
             tower1Placement,
@@ -220,7 +221,12 @@ class SnowLandGenerator(seed: Long): Generator {
                 if (structure != null) {
                     val minX = bottom.blockX() - bottom.blockX().mod(structure.x)
                     val minZ = bottom.blockZ() - bottom.blockZ().mod(structure.z)
-                    val height = variables.evaluateHeight(BlockVec(minX, 0, minZ)).toInt()
+                    val height1 = variables.evaluateHeight(BlockVec(minX, 0, minZ)).toInt()
+                    val height2 = variables.evaluateHeight(BlockVec(minX + structure.x, 0, minZ)).toInt()
+                    val height3 = variables.evaluateHeight(BlockVec(minX, 0, minZ + structure.z)).toInt()
+                    val height4 = variables.evaluateHeight(BlockVec(minX + structure.x, 0, minZ + structure.z)).toInt()
+
+                    val height = min(min(min(height1, height2), height3), height4)
 
                     for (y in 0..<unit.size().y().toInt()) {
                         val block = structure.getBlock(bottom.blockX(), start.blockY() + y, bottom.blockZ(), height)
