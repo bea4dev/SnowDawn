@@ -17,7 +17,7 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test")
 
     // VanillaSource
-    compileOnly("com.github.bea4dev:VanillaSource:09c518e2f3")
+    compileOnly("com.github.bea4dev:VanillaSource:08fa445a6f")
 
     // Noise
     implementation("de.articdive:jnoise-pipeline:4.1.0")

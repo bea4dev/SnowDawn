@@ -4,7 +4,6 @@ import net.kyori.adventure.text.format.NamedTextColor
 import net.minestom.server.MinecraftServer
 import net.minestom.server.registry.DynamicRegistry
 import net.minestom.server.sound.SoundEvent
-import net.minestom.server.utils.NamespaceID
 import net.minestom.server.world.biome.Biome
 import net.minestom.server.world.biome.BiomeEffects
 
@@ -14,7 +13,7 @@ object SnowDawnBiomes {
     init {
         val white = NamedTextColor.WHITE.value()
 
-        val snowLand = Biome.builder(NamespaceID.from("snow_dawn:snow_land"))
+        val snowLand = Biome.builder()
             .effects(
                 BiomeEffects(
                     white,
@@ -33,7 +32,7 @@ object SnowDawnBiomes {
             )
             .temperature(0.0F)
             .build()
-        SNOW_LAND = MinecraftServer.getBiomeRegistry().register(snowLand)
+        SNOW_LAND = MinecraftServer.getBiomeRegistry().register("snow_dawn:snow_land", snowLand)
     }
 
     fun init() {}
