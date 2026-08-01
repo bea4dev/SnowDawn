@@ -1,9 +1,9 @@
 package com.github.bea4dev.snowDawn.generator
 
-import com.github.bea4dev.snowDawn.generator.structure.FixedPositionStructure
 import com.github.bea4dev.snowDawn.generator.structure.FixedPositionStructures
 import com.github.bea4dev.snowDawn.generator.structure.ItemChest
 import com.github.bea4dev.snowDawn.generator.structure.SleepStructureLayout
+import com.github.bea4dev.snowDawn.generator.structure.SnowLandBoundary
 import com.github.bea4dev.snowDawn.generator.structure.SurfaceStructures
 import com.github.bea4dev.snowDawn.generator.structure.StructureChestRequirement
 import com.github.bea4dev.snowDawn.generator.structure.UnderGroundStructures
@@ -22,8 +22,6 @@ import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
 import org.bukkit.generator.WorldInfo
 import org.bukkit.inventory.ItemStack
-import org.bukkit.util.Vector
-import java.util.*
 
 private class SnowLandBiomeProvider(seed: Long) : BiomeProvider() {
     private val biomes = listOf(
@@ -147,7 +145,6 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 5 },
                     ItemRegistry.TORCH.createItemStack().also { item -> item.amount = 1 },
                     ItemRegistry.FUEL.createItemStack().also { item -> item.amount = 2 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemRegistry.SAPLING.createItemStack().also { item -> item.amount = 1 },
                 ),
                 listOf(
@@ -167,7 +164,6 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemStack(Material.CARROT, 2),
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 2 },
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 5 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemRegistry.ICE.createItemStack().also { item -> item.amount = 3 },
                     ItemRegistry.DIRT.createItemStack().also { item -> item.amount = 3 },
                 ),
@@ -180,14 +176,12 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 2 },
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 7 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemRegistry.BLUE_PRINT_CATALYST.createItemStack(),
                 ),
                 listOf(
                     ItemRegistry.COPPER_INGOT.createItemStack().also { item -> item.amount = 1 },
                     ItemRegistry.FUEL.createItemStack().also { item -> item.amount = 2 },
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 2 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                 ),
                 listOf(
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 4 },
@@ -275,22 +269,20 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemRegistry.FUEL.createItemStack().also { item -> item.amount = 3 },
                 ),
                 listOf(
                     ItemStack(Material.POTATO, 3),
                     ItemStack(Material.POISONOUS_POTATO, 2),
+                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemStack(Material.CARROT, 1),
                     ItemStack(Material.POTATO, 1),
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                 ),
                 listOf(
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 3 },
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
-                    ItemRegistry.STORY_MEMO.createItemStack(),
                     ItemRegistry.BLUE_PRINT_CATALYST.createItemStack()
                 ),
                 listOf(
@@ -304,21 +296,13 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
         seed,
         merge = false,
     )
-    private val entranceDoor = FixedPositionStructure(
-        { minX, surfaceY, minZ, asset -> true },
-        WorldAssetsRegistry.getAsset("ent_door_0")!!,
-        Vector(0, -64, 0),
-        ItemChest(listOf(emptyList()), StructureChestRequirement.DIAMOND),
-        seed,
-        merge = true,
-    )
 
     private val populators = listOf(
         sleepStructures,
         surfaceStructures,
         roomStructures,
         surfaceRoomStructures,
-        entranceDoor,
+        SnowLandBoundary(),
     )
 
     override fun shouldGenerateNoise(): Boolean {

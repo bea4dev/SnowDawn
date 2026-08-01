@@ -1,5 +1,6 @@
 package com.github.bea4dev.snowDawn.player
 
+import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
 import com.github.bea4dev.snowDawn.player.PlayerManager.ONLINE_PLAYERS
 import org.bukkit.Location
 import org.bukkit.entity.Player
@@ -38,11 +39,13 @@ internal class PlayerManagerListener : Listener {
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val player = event.player
         ONLINE_PLAYERS.add(player)
+        BGMProcessorRegistry.onPlayerJoin(player)
     }
 
     @EventHandler
     fun onPlayerLeave(event: PlayerQuitEvent) {
         val player = event.player
+        BGMProcessorRegistry.onPlayerQuit(player)
         ONLINE_PLAYERS.remove(player)
     }
 }

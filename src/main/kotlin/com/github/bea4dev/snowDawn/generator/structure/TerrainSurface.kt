@@ -12,6 +12,7 @@ internal fun LimitedRegion.findTerrainSurfaceY(worldInfo: WorldInfo, x: Int, z: 
     }
 
     val highestY = getHighestBlockYAt(x, z, HeightMap.WORLD_SURFACE)
+        .coerceIn(worldInfo.minHeight, worldInfo.maxHeight - 1)
     for (y in highestY downTo worldInfo.minHeight) {
         val material = getBlockData(x, y, z).material
         if (material.isTerrainSurface()) {

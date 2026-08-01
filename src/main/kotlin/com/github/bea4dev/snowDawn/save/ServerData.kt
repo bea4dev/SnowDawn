@@ -9,6 +9,8 @@ object ServerData {
 
     val storyTextIndex = mutableMapOf<String, Int>()
     val unlockedStoryMemos = mutableMapOf<String, MutableSet<Int>>()
+    var theEndBgmUnlocked = false
+        private set
     val craftableItems = mutableListOf(
         ItemRegistry.SCRAP_PIPE.id,
         ItemRegistry.WOODEN_PICKAXE.id,
@@ -60,6 +62,12 @@ object ServerData {
             }
         }
 
+        theEndBgmUnlocked = if (yml.contains("theEndBgmUnlocked")) {
+            yml.getBoolean("theEndBgmUnlocked")
+        } else {
+            unlockedStoryMemos["snow_land"]?.contains(8) == true
+        }
+
         // craftableItems 読み込み（存在すれば上書き、無ければ現状維持＝デフォルトのまま）
         if (yml.contains("craftableItems")) {
             craftableItems.clear()
@@ -91,6 +99,7 @@ object ServerData {
 
         // リストはそのまま保存
         yml.set("craftableItems", craftableItems)
+        yml.set("theEndBgmUnlocked", theEndBgmUnlocked)
 
         runCatching {
             file.parentFile?.mkdirs()
@@ -104,6 +113,17 @@ object ServerData {
             return false
         }
 
+        save()
+        return true
+    }
+
+    @Synchronized
+    fun unlockTheEndBgm(): Boolean {
+        if (theEndBgmUnlocked) {
+            return false
+        }
+
+        theEndBgmUnlocked = true
         save()
         return true
     }

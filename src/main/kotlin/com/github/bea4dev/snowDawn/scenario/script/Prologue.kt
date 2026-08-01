@@ -8,6 +8,7 @@ import com.github.bea4dev.snowDawn.coroutine.play
 import com.github.bea4dev.snowDawn.item.ItemRegistry
 import com.github.bea4dev.snowDawn.listeners.sendCraftingSlotButtons
 import com.github.bea4dev.snowDawn.listeners.CompassInventory
+import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
 import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
 import com.github.bea4dev.snowDawn.scenario.Scenario
@@ -41,6 +42,8 @@ object Prologue : Scenario() {
     private val SPAWN_POSITION = Vector(1.5, 64.0, 1.5)
 
     override suspend fun run(player: Player) {
+        BGMProcessorRegistry[player].disable()
+
         black(player)
 
         val playerSkin = async { getPlayerSkin(player.uniqueId) }.await()
@@ -176,6 +179,8 @@ object Prologue : Scenario() {
             player.gameMode = GameMode.SPECTATOR
             player.teleport(SPAWN_POSITION.toLocation(WorldRegistry.SNOW_LAND))
         }.await()
+
+        BGMProcessorRegistry[player].enable()
 
         val nmsHandler = VanillaSourceAPI.getInstance().nmsHandler
         val enginePlayer = EnginePlayer.getEnginePlayer(player)

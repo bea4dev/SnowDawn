@@ -2,6 +2,8 @@ package com.github.bea4dev.snowDawn.text
 
 import com.github.bea4dev.snowDawn.coroutine.play
 import com.github.bea4dev.snowDawn.listeners.StoryMemoUnlockEventRegistry
+import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
+import com.github.bea4dev.snowDawn.music.BGM_TRACK_THE_END
 import com.github.bea4dev.snowDawn.save.ServerData
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
 import com.github.bea4dev.snowDawn.toast.ToastKind
@@ -84,6 +86,9 @@ object StoryMemoText {
             ).play().await()
         }
         StoryMemoUnlockEventRegistry.register(WorldRegistry.SNOW_LAND, 8) { player ->
+            ServerData.unlockTheEndBgm()
+            BGMProcessorRegistry[player].addTrack(BGM_TRACK_THE_END)
+
             TextBox(
                 player,
                 DEFAULT_TEXT_BOX,

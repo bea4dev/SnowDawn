@@ -15,6 +15,7 @@ enum class Text(val jp: String) {
 
     CRAFT_UI("クラフト"),
     STORY_MEMO_LIST("解放済みストーリーメモ"),
+    BGM_NOW_PLAYING("Now Playing: {0}"),
     CRAFT_UI_CLICK_TO_OPEN("クリックで開く"),
     CRAFT_REQUIRED("> 必要なアイテム"),
     CANNOT_CRAFT("材料が足りません"),
