@@ -6,6 +6,7 @@ import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
 import com.github.bea4dev.snowDawn.music.BGM_TRACK_THE_END
 import com.github.bea4dev.snowDawn.save.ServerData
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
+import com.github.bea4dev.snowDawn.scenario.lowSound
 import com.github.bea4dev.snowDawn.toast.ToastKind
 import com.github.bea4dev.snowDawn.toast.ToastNotification
 import com.github.bea4dev.snowDawn.toast.sendToast
@@ -74,7 +75,7 @@ object StoryMemoText {
                 Text.LUCAS[player],
                 1,
                 Text.MEMO_0[player]
-            ).play().await()
+            ).lowSound().play().await()
         }
         StoryMemoUnlockEventRegistry.register(WorldRegistry.SNOW_LAND, 4) { player ->
             TextBox(
@@ -83,7 +84,7 @@ object StoryMemoText {
                 Text.LUCAS[player],
                 1,
                 Text.MEMO_4[player]
-            ).play().await()
+            ).lowSound().play().await()
         }
         StoryMemoUnlockEventRegistry.register(WorldRegistry.SNOW_LAND, 8) { player ->
             ServerData.unlockTheEndBgm()
@@ -95,7 +96,7 @@ object StoryMemoText {
                 Text.LUCAS[player],
                 1,
                 Text.MEMO_8[player, player.name]
-            ).play().await()
+            ).lowSound().play().await()
 
             player.playSound(
                 player.location,

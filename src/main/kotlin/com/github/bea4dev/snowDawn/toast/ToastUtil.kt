@@ -75,7 +75,7 @@ class ToastNotification(
             )
 
             advancements.add(AdvancementHolder(TOAST_ADVANCEMENT_KEY, advancement))
-            progress.put(TOAST_ADVANCEMENT_KEY, DUMMY_PROGRESS)
+            progress[TOAST_ADVANCEMENT_KEY] = DUMMY_PROGRESS
         } else {
             removes.add(TOAST_ADVANCEMENT_KEY)
         }

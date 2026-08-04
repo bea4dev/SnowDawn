@@ -11,6 +11,8 @@ object ServerData {
     val unlockedStoryMemos = mutableMapOf<String, MutableSet<Int>>()
     var theEndBgmUnlocked = false
         private set
+    var centerScenarioStarted = false
+        private set
     val craftableItems = mutableListOf(
         ItemRegistry.SCRAP_PIPE.id,
         ItemRegistry.WOODEN_PICKAXE.id,
@@ -67,6 +69,7 @@ object ServerData {
         } else {
             unlockedStoryMemos["snow_land"]?.contains(8) == true
         }
+        centerScenarioStarted = yml.getBoolean("centerScenarioStarted", false)
 
         // craftableItems 読み込み（存在すれば上書き、無ければ現状維持＝デフォルトのまま）
         if (yml.contains("craftableItems")) {
@@ -100,6 +103,7 @@ object ServerData {
         // リストはそのまま保存
         yml.set("craftableItems", craftableItems)
         yml.set("theEndBgmUnlocked", theEndBgmUnlocked)
+        yml.set("centerScenarioStarted", centerScenarioStarted)
 
         runCatching {
             file.parentFile?.mkdirs()
@@ -124,6 +128,17 @@ object ServerData {
         }
 
         theEndBgmUnlocked = true
+        save()
+        return true
+    }
+
+    @Synchronized
+    fun markCenterScenarioStarted(): Boolean {
+        if (centerScenarioStarted) {
+            return false
+        }
+
+        centerScenarioStarted = true
         save()
         return true
     }

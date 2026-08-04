@@ -22,6 +22,7 @@ import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.ChunkGenerator
 import org.bukkit.generator.WorldInfo
 import org.bukkit.inventory.ItemStack
+import org.bukkit.util.Vector
 
 private class SnowLandBiomeProvider(seed: Long) : BiomeProvider() {
     private val biomes = listOf(
@@ -116,6 +117,17 @@ private class SnowLandBiomeProvider(seed: Long) : BiomeProvider() {
 class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
 
     private val biomeProvider = SnowLandBiomeProvider(seed)
+    private val centerAsset = WorldAssetsRegistry.getAsset("center")!!
+    private val centerStructure = FixedPositionStructures(
+        listOf(
+            centerAsset to Vector(
+                999,
+                114 - (centerAsset.endPosition.blockY - centerAsset.startPosition.blockY),
+                8 - (centerAsset.endPosition.blockZ - centerAsset.startPosition.blockZ),
+            )
+        ),
+        merge = false,
+    )
     private val sleepStructures = FixedPositionStructures(
         SleepStructureLayout.structures,
         listOf(
@@ -303,6 +315,7 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
         roomStructures,
         surfaceRoomStructures,
         SnowLandBoundary(),
+        centerStructure,
     )
 
     override fun shouldGenerateNoise(): Boolean {

@@ -23,6 +23,7 @@ import com.github.bea4dev.snowDawn.listeners.WeaponListener
 import com.github.bea4dev.snowDawn.player.PlayerManagerListener
 import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
 import com.github.bea4dev.snowDawn.save.ServerData
+import com.github.bea4dev.snowDawn.scenario.CenterTriggerProcessor
 import com.github.bea4dev.snowDawn.world.WorldRegistry
 import com.github.bea4dev.vanilla_source.api.VanillaSourceAPI
 import com.github.bea4dev.vanilla_source.api.entity.tick.TickThread
@@ -61,6 +62,7 @@ class SnowDawn : JavaPlugin() {
         WorldRegistry.init()
         MobSpawnProcessor.init()
         FurnaceRecipe.init()
+        CenterTriggerProcessor.init()
 
         // ワールドのロードがBukkitRunnableで行われるのでそれに合わせて少し実行を遅らせる
         Bukkit.getScheduler().runTaskLater(this, Runnable {

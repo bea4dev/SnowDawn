@@ -6,7 +6,7 @@ import org.bukkit.generator.BlockPopulator
 import org.bukkit.generator.LimitedRegion
 import org.bukkit.generator.WorldInfo
 
-private const val WALL_DISTANCE = 800
+private const val WALL_DISTANCE = 1000
 
 class SnowLandBoundary : BlockPopulator() {
     override fun populate(
@@ -26,7 +26,7 @@ class SnowLandBoundary : BlockPopulator() {
 
                 if (isOutsideBoundary(worldX, worldZ)) {
                     for (y in worldInfo.minHeight until worldInfo.maxHeight) {
-                        limitedRegion.setType(worldX, y, worldZ, Material.TUFF)
+                        limitedRegion.setType(worldX, y, worldZ, Material.STONE)
                     }
                 }
             }

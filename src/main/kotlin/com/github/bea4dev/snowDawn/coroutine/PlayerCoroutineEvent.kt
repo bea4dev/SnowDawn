@@ -2,6 +2,7 @@ package com.github.bea4dev.snowDawn.coroutine
 
 import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
+import com.github.bea4dev.snowDawn.scenario.lowSound
 import com.github.bea4dev.snowDawn.text.Text
 import com.github.bea4dev.vanilla_source.api.text.TextBox
 import java.util.UUID
@@ -26,7 +27,7 @@ object PlayerCoroutineEventRegistry {
                 Text.LUCAS[player],
                 1,
                 Text.FIRST_CRAFT_0[player]
-            ).play().await()
+            ).lowSound().play().await()
 
             TextBox(
                 player,
@@ -34,7 +35,7 @@ object PlayerCoroutineEventRegistry {
                 Text.LUCAS[player],
                 1,
                 Text.FIRST_CRAFT_1[player]
-            ).play().await()
+            ).lowSound().play().await()
         }
     }
 }

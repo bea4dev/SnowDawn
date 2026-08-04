@@ -13,6 +13,7 @@ import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
 import com.github.bea4dev.snowDawn.scenario.Scenario
 import com.github.bea4dev.snowDawn.scenario.getPlayerSkin
+import com.github.bea4dev.snowDawn.scenario.lowSound
 import com.github.bea4dev.snowDawn.text.Text
 import com.github.bea4dev.snowDawn.world.WorldRegistry
 import com.github.bea4dev.vanilla_source.api.VanillaSourceAPI
@@ -272,7 +273,7 @@ object Prologue : Scenario() {
             "?????",
             1,
             Text.PROLOGUE_12[player]
-        ).play().await()
+        ).lowSound().play().await()
 
         TextBox(
             player,
@@ -280,7 +281,7 @@ object Prologue : Scenario() {
             "?????",
             1,
             Text.PROLOGUE_13[player]
-        ).play().await()
+        ).lowSound().play().await()
 
         CoroutineFlagRegistry.MAIN_HAND_COMPASS[player].future().await()
 
@@ -290,7 +291,7 @@ object Prologue : Scenario() {
             Text.LUCAS[player],
             1,
             Text.PROLOGUE_14[player]
-        ).play().await()
+        ).lowSound().play().await()
 
         TextBox(
             player,
@@ -298,7 +299,7 @@ object Prologue : Scenario() {
             Text.LUCAS[player],
             1,
             Text.PROLOGUE_15[player, player.name]
-        ).play().await()
+        ).lowSound().play().await()
 
         TextBox(
             player,
@@ -306,7 +307,7 @@ object Prologue : Scenario() {
             Text.LUCAS[player],
             1,
             Text.PROLOGUE_16[player]
-        ).play().await()
+        ).lowSound().play().await()
 
         TextBox(
             player,
@@ -314,7 +315,7 @@ object Prologue : Scenario() {
             Text.LUCAS[player],
             1,
             Text.PROLOGUE_17[player]
-        ).play().await()
+        ).lowSound().play().await()
 
         MainThread.sync {
             val playerData = PlayerDataRegistry[player]
