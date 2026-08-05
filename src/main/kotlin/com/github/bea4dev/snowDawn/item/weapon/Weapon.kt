@@ -9,6 +9,9 @@ import com.github.bea4dev.vanilla_source.api.util.collision.CollideOption
 import com.github.bea4dev.vanilla_source.api.world.cache.AsyncWorldCache
 import de.tr7zw.changeme.nbtapi.NBT
 import net.kyori.adventure.sound.Sound
+import net.kyori.adventure.text.Component
+import net.kyori.adventure.text.format.NamedTextColor
+import net.kyori.adventure.text.format.TextDecoration
 import org.bukkit.FluidCollisionMode
 import org.bukkit.Material
 import org.bukkit.Particle
@@ -34,6 +37,25 @@ class Weapon(
 
     override fun createItemStack(): ItemStack {
         return super.createItemStack()
+            .also { item ->
+                val meta = item.itemMeta
+                val lore = meta.lore()?.toMutableList() ?: mutableListOf()
+                val displayedAttackDamage = if (attackDamage % 1.0F == 0.0F) {
+                    attackDamage.toInt().toString()
+                } else {
+                    attackDamage.toString()
+                }
+
+                lore.add(
+                    Component.translatable(
+                        Text.ITEM_WEAPON_ATTACK_DAMAGE.toString(),
+                        Component.text(displayedAttackDamage),
+                    ).color(NamedTextColor.DARK_GREEN)
+                        .decoration(TextDecoration.ITALIC, false)
+                )
+                meta.lore(lore)
+                item.itemMeta = meta
+            }
             .also { item -> NBT.modify(item) { nbt -> nbt.setInteger(WeaponTag.MAX_ATTACK_TICK.key, maxAttackTick) } }
     }
 

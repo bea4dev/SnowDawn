@@ -9,6 +9,7 @@ import org.bukkit.event.block.BlockDamageAbortEvent
 import org.bukkit.event.player.PlayerInteractEvent
 
 class DiggingListener : Listener {
+    /*
     @EventHandler
     fun onStartDigging(event: PlayerInteractEvent) {
         if (event.action != Action.LEFT_CLICK_BLOCK) {
@@ -29,5 +30,5 @@ class DiggingListener : Listener {
         val player = event.player
         val attribute = player.getAttribute(Attribute.PLAYER_BLOCK_BREAK_SPEED)!!
         attribute.baseValue = attribute.defaultValue
-    }
+    }*/
 }

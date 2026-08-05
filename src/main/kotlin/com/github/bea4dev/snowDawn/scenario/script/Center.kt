@@ -4,6 +4,7 @@ import com.github.bea4dev.snowDawn.camera.createCamera
 import com.github.bea4dev.snowDawn.coroutine.MainThread
 import com.github.bea4dev.snowDawn.coroutine.async
 import com.github.bea4dev.snowDawn.coroutine.play
+import com.github.bea4dev.snowDawn.item.weapon.WeaponTaskManager
 import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
 import com.github.bea4dev.snowDawn.scenario.DEFAULT_TEXT_BOX
 import com.github.bea4dev.snowDawn.scenario.SCENARIO_TICK_THREAD
@@ -20,7 +21,6 @@ import com.github.bea4dev.vanilla_source.api.camera.CameraPositionAt
 import com.github.bea4dev.vanilla_source.api.camera.CameraPositionsManager
 import com.github.bea4dev.vanilla_source.api.camera.LookAtEntityTracker
 import com.github.bea4dev.vanilla_source.api.entity.EngineEntity
-import com.github.bea4dev.vanilla_source.api.entity.ai.pathfinding.BlockPosition
 import com.github.bea4dev.vanilla_source.api.player.EnginePlayer
 import com.github.bea4dev.vanilla_source.api.text.TextBox
 import com.mojang.authlib.GameProfile
@@ -59,9 +59,12 @@ object Center : Scenario() {
     private val CHEST_FRONT_POSITION = Vector(-0.5, 63.0, 3.5)
     private val COLD_SLEEP_FRONT_POSITION = Vector(-1, 63, 1)
     private val COLD_SLEEP_POSITION = Vector(1.5, 64.0, 1.5)
-    private val PROLOGUE_POSITION = Vector(-20.5, 1.0, -0.5)
 
     override suspend fun run(player: Player) {
+        WeaponTaskManager[player]?.enableBar?.set(false)
+
+        delay(100.milliseconds)
+
         blackFeedOut(player, 1000)
 
         val nmsHandler = VanillaSourceAPI.getInstance().nmsHandler
@@ -443,6 +446,15 @@ object Center : Scenario() {
             Text.CENTER_9[player, player.name]
         ).lowSound().play().await()
 
+        player.playSound(
+            net.kyori.adventure.sound.Sound.sound(
+                Sound.MUSIC_DISC_OTHERSIDE,
+                net.kyori.adventure.sound.Sound.Source.MUSIC,
+                Float.MAX_VALUE,
+                1.0F
+            )
+        )
+
         delay(1000.milliseconds)
 
         blackFeedOut(player, 2000)
@@ -450,29 +462,9 @@ object Center : Scenario() {
         delay(2000.milliseconds)
 
         camera5.end()
+        npcEntity.kill()
+        npc.hide(null, enginePlayer)
 
-        delay(500.milliseconds)
-
-        MainThread.sync {
-            player.gameMode = GameMode.ADVENTURE
-            player.teleport(PROLOGUE_POSITION.toLocation(WorldRegistry.PROLOGUE))
-            player.inventory.clear()
-        }.await()
-
-        delay(6000.milliseconds)
-
-        blackFeedIn(player, 2000)
-
-        delay(2000.milliseconds)
-
-        TextBox(
-            player,
-            DEFAULT_TEXT_BOX,
-            "",
-            1,
-            Text.CENTER_10[player]
-        ).play().await()
-
-        blackFeedOut(player, 2000)
+        Ending.start(player)
     }
 }
