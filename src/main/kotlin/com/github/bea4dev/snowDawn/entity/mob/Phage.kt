@@ -29,6 +29,17 @@ import org.bukkit.util.Vector
 import kotlin.math.pow
 import kotlin.random.Random
 
+enum class PhageTier(
+    val health: Float,
+    val attackDamage: Float,
+    val armor: Material,
+) {
+    TIER_1(10.0F, 2.0F, Material.AIR),
+    TIER_2(10.0F, 8.0F, Material.STONE),
+    TIER_3(20.0F, 8.0F, Material.DEEPSLATE),
+    TIER_4(40.0F, 16.0F, Material.BEDROCK),
+}
+
 class Phage(
     location: Location,
     private var health: Float,
@@ -46,6 +57,10 @@ class Phage(
     SnowDawn.ENTITY_THREAD,
     null
 ) {
+    constructor(location: Location, tier: PhageTier) : this(location, tier.health, tier.attackDamage) {
+        block = tier.armor
+    }
+
     val bukkitWorld = location.world
     private var state = PhageState.IDLE
     private var stateVariables = PhageStateVariables()
@@ -113,7 +128,7 @@ class Phage(
 
     @Synchronized
     override fun tick() {
-        if (!chunk.isLoaded || super.y < 0 || inactiveTick > maxInactiveTick) {
+        if (!chunk.isLoaded || super.y < -64 || inactiveTick > maxInactiveTick) {
             kill()
             return
         }

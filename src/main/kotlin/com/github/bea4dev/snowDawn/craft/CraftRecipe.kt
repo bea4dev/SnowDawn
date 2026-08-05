@@ -15,6 +15,10 @@ import org.bukkit.inventory.ItemStack
 object CraftRecipeRegistry {
     val RECIPES = listOf(
         CraftRecipe(listOf(RequiredItem(ItemRegistry.SCRAP, 2)), ItemRegistry.SCRAP_PIPE),
+        CraftRecipe(
+            listOf(RequiredItem(ItemRegistry.IRON_INGOT, 6), RequiredItem(ItemRegistry.DIAMOND, 2)),
+            ItemRegistry.STURDY_PIPE
+        ),
         CraftRecipe(listOf(RequiredItem(ItemRegistry.WOOD, 1)), ItemRegistry.WOODEN_PICKAXE),
         CraftRecipe(listOf(RequiredItem(ItemRegistry.COAL, 1)), ItemRegistry.TORCH, 2),
         CraftRecipe(listOf(RequiredItem(ItemRegistry.COAL, 4), RequiredItem(ItemRegistry.WOOD, 2)), ItemRegistry.CAMPFIRE),

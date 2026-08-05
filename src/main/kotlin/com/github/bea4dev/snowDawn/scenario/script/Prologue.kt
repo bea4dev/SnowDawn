@@ -29,6 +29,7 @@ import net.kyori.adventure.text.Component
 import net.kyori.adventure.text.format.NamedTextColor
 import net.kyori.adventure.title.Title
 import org.bukkit.GameMode
+import org.bukkit.Sound
 import org.bukkit.entity.EntityType
 import org.bukkit.entity.Player
 import org.bukkit.util.Vector
@@ -41,9 +42,58 @@ import kotlin.time.DurationUnit
 object Prologue : Scenario() {
     private val POSITION = Vector(-20.5, 1.0, -0.5)
     private val SPAWN_POSITION = Vector(1.5, 64.0, 1.5)
+    private val LOGIN_POSITION = Vector(0.5, 0.0, 0.5)
 
     override suspend fun run(player: Player) {
         BGMProcessorRegistry[player].disable()
+
+        delay(4000.milliseconds)
+
+        MainThread.sync {
+            player.gameMode = GameMode.ADVENTURE
+            player.teleport(LOGIN_POSITION.toLocation(WorldRegistry.PROLOGUE))
+        }.await()
+
+        player.playSound(
+            player.location,
+            Sound.MUSIC_DISC_STAL,
+            Float.MAX_VALUE,
+            1.0F
+        )
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_SHIFT_0[player]
+        ).play().await()
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_SHIFT_1[player]
+        ).play().await()
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_MUSIC_0[player]
+        ).play().await()
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_MUSIC_1[player]
+        ).play().await()
+
+        player.stopAllSounds()
 
         black(player)
 
@@ -53,7 +103,6 @@ object Prologue : Scenario() {
 
         MainThread.sync {
             player.teleport(POSITION.toLocation(WorldRegistry.PROLOGUE))
-            player.gameMode = GameMode.ADVENTURE
             player.inventory.clear()
             sendCraftingSlotButtons(player)
         }.await()
@@ -147,6 +196,22 @@ object Prologue : Scenario() {
 
         CoroutineFlagRegistry.CRAFTING_TORCH[player].future().await()
         MainThread.sync { player.inventory.close() }.await()
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_CAMPFIRE[player]
+        ).play().await()
+
+        TextBox(
+            player,
+            DEFAULT_TEXT_BOX,
+            "",
+            1,
+            Text.PROLOGUE_JUUYOU[player]
+        ).play().await()
 
         TextBox(
             player,
@@ -260,7 +325,7 @@ object Prologue : Scenario() {
             player.inventory.clear()
             player.inventory.addItem(ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 2 })
             player.inventory.addItem(ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 })
-            player.inventory.setItem(9, ItemRegistry.COMPASS.createItemStack().also { item -> item.amount = 1 })
+            player.inventory.setItem(8, CompassInventory.createItemStack().also { item -> item.amount = 1 })
         }.await()
 
         blackFeedIn(player, 2000)

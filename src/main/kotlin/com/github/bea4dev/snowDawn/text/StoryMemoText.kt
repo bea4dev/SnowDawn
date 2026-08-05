@@ -1,6 +1,7 @@
 package com.github.bea4dev.snowDawn.text
 
 import com.github.bea4dev.snowDawn.coroutine.play
+import com.github.bea4dev.snowDawn.listeners.CompassInventory
 import com.github.bea4dev.snowDawn.listeners.StoryMemoUnlockEventRegistry
 import com.github.bea4dev.snowDawn.music.BGMProcessorRegistry
 import com.github.bea4dev.snowDawn.music.BGM_TRACK_THE_END
@@ -19,6 +20,7 @@ import net.kyori.adventure.text.format.TextDecoration
 import net.kyori.adventure.translation.GlobalTranslator
 import net.kyori.adventure.translation.TranslationRegistry
 import org.bukkit.Material
+import org.bukkit.Bukkit
 import org.bukkit.Sound
 import org.bukkit.World
 import org.bukkit.inventory.ItemStack
@@ -42,6 +44,7 @@ object StoryMemoText {
             "手記\n兄から手紙が来た。\n短いものだった。\n「もう村でお前の名を\n口にするな」と。\n家族に累が及ぶのは道理だ。\n分かっている。\n分かってはいるのだ。",
             "手記\n旧い友人に、初めて全てを話した。\n壁のこと、星のこと、\n外の宇宙のこと。\n案の定、腹を抱えて笑われた。\nだが帰り際、彼はこう聞いた。\n「で、ポッドは二台あるのか」と。\n冗談だと思って流してしまった。\n彼はいつも冗談ばかり言う。",
             "手記\n彼まで村での立場を\n失いつつあるらしい。\n私と口をきくというだけで、だ。\nもう誰も巻き込むべきではない。\nこの先は一人でやる。\n古文書にあった「制御中枢」\n――ドームが実在するなら、\nその心臓部も実在するはずだ。\nそれを探す。",
+            "手記\n古い記録に繰り返し\n「Snow Dawn」という言葉が登場する。\n我々の祖先は\n一体何を計画していたのだろうか",
             "メモ\n見つけた。\n三百年前の測量記録の余白に、それはあった。\n制御中枢。X: ████ / Z: ████\n巨大な壁の内側だという。\nこの座標を計器に打ち込めば、あとは針が導いてくれる。",
         ),
         WorldRegistry.SECOND_MEGA_STRUCTURE to listOf(
@@ -86,7 +89,11 @@ object StoryMemoText {
                 Text.MEMO_4[player]
             ).lowSound().play().await()
         }
-        StoryMemoUnlockEventRegistry.register(WorldRegistry.SNOW_LAND, 8) { player ->
+        StoryMemoUnlockEventRegistry.register(WorldRegistry.SNOW_LAND, 9) { player ->
+            if (ServerData.unlockCompassDestination()) {
+                Bukkit.getOnlinePlayers().forEach(CompassInventory::ensure)
+            }
+
             ServerData.unlockTheEndBgm()
             BGMProcessorRegistry[player].addTrack(BGM_TRACK_THE_END)
 

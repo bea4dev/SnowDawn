@@ -7,6 +7,8 @@ import com.github.bea4dev.snowDawn.generator.structure.SnowLandBoundary
 import com.github.bea4dev.snowDawn.generator.structure.SurfaceStructures
 import com.github.bea4dev.snowDawn.generator.structure.StructureChestRequirement
 import com.github.bea4dev.snowDawn.generator.structure.UnderGroundStructures
+import com.github.bea4dev.snowDawn.generator.structure.VanillaDungeonRemoval
+import com.github.bea4dev.snowDawn.generator.structure.VanillaOreRemoval
 import com.github.bea4dev.snowDawn.item.ItemRegistry
 import com.github.bea4dev.vanilla_source.api.asset.WorldAssetsRegistry
 import de.articdive.jnoise.generators.noisegen.opensimplex.FastSimplexNoiseGenerator
@@ -229,6 +231,7 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 4 },
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 1 },
                     ItemRegistry.FUEL.createItemStack().also { item -> item.amount = 4 },
+                    ItemRegistry.BLUE_PRINT_STURDY_PIPE.createItemStack(),
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
@@ -247,6 +250,7 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                 listOf(
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 3 },
                     ItemRegistry.BLUE_PRINT_CATALYST.createItemStack(),
+                    ItemRegistry.BLUE_PRINT_STURDY_PIPE.createItemStack(),
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
@@ -310,6 +314,8 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
     )
 
     private val populators = listOf(
+        VanillaDungeonRemoval(),
+        VanillaOreRemoval(),
         sleepStructures,
         surfaceStructures,
         roomStructures,

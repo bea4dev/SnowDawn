@@ -24,6 +24,24 @@ object ItemRegistry {
             Text.ITEM_SCRAP_PIPE_LORE_4
         ), 10, 5.0, 4.0F
     )
+    val STURDY_PIPE = Weapon(
+        "sturdy_pipe", Material.SHEARS, 1, 2, Text.ITEM_STURDY_PIPE, listOf(
+            Text.ITEM_STURDY_PIPE_LORE_0,
+            Text.ITEM_SCRAP_PIPE_LORE_1,
+            Text.ITEM_SCRAP_PIPE_LORE_2,
+            Text.ITEM_SCRAP_PIPE_LORE_3,
+            Text.ITEM_SCRAP_PIPE_LORE_4
+        ), 15, 5.0, 16.0F
+    )
+    val BLUE_PRINT_STURDY_PIPE = BluePrint(
+        "blue_print_sturdy_pipe",
+        Material.PAPER,
+        2,
+        3,
+        Text.ITEM_BLUE_PRINT_STURDY_PIPE,
+        listOf(),
+        listOf(STURDY_PIPE)
+    )
     val ICE = Item("ice", Material.ICE, 0, 0, Text.ITEM_ICE, listOf())
     val COAL = Item("coal", Material.COAL, 0, 0, Text.ITEM_COAL, listOf())
     val TORCH = Item("torch", Material.TORCH, 0, 1, Text.ITEM_TORCH, listOf(Text.ITEM_TORCH_LORE_0))
@@ -75,6 +93,7 @@ object ItemRegistry {
     val IRON_BOOTS = Item("iron_boots", Material.IRON_BOOTS, 0, 1, Text.ITEM_IRON_BOOTS, listOf())
     val STORY_MEMO = Item("empty_memo", Material.PAPER, 0, 1, Text.EMPTY, listOf())
     val IRON_INGOT = Item("iron_ingot", Material.IRON_INGOT, 0, 1, Text.ITEM_IRON_INGOT, listOf())
+    val DIAMOND = Item("diamond", Material.DIAMOND, 0, 1, Text.ITEM_DIAMOND, listOf())
     val IRON_PICKAXE = Item("iron_pickaxe", Material.IRON_PICKAXE, 0, 1, Text.ITEM_IRON_PICKAXE, listOf())
     val IRON_HOE = Item("iron_hoe", Material.IRON_HOE, 0, 1, Text.ITEM_IRON_HOE, listOf())
     val IRON_SHOVEL = Item("iron_shovel", Material.IRON_SHOVEL, 0, 1, Text.ITEM_IRON_SHOVEL, listOf())

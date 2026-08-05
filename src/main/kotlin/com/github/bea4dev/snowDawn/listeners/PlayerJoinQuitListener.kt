@@ -6,6 +6,7 @@ import com.github.bea4dev.snowDawn.item.weapon.PlayerWeaponTask
 import com.github.bea4dev.snowDawn.player.PlayerTask
 import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
 import com.github.bea4dev.snowDawn.scenario.MoviePlayerManager
+import com.github.bea4dev.snowDawn.scenario.script.Center
 import com.github.bea4dev.snowDawn.scenario.script.Prologue
 import com.github.bea4dev.snowDawn.world.WorldRegistry
 import net.kyori.adventure.text.Component
@@ -34,13 +35,8 @@ internal class PlayerJoinQuitListener : Listener {
 
         registerPacketListener(player)
 
-        player.gameMode = GameMode.CREATIVE
-
         //player.teleport(Location(WorldRegistry.ASSET, 0.5, 1.0, 0.5))
         //player.teleport(Location(WorldRegistry.SNOW_LAND, 0.5, 330.0, 0.5))
-
-        player.inventory.setItemInMainHand(ItemRegistry.SCRAP_PIPE.createItemStack())
-        player.inventory.addItem(ItemRegistry.SCRAP.createItemStack())
 
         PlayerWeaponTask(player).runTaskTimer(SnowDawn.plugin, 0, 1)
         PlayerTask(player).start()

@@ -47,6 +47,7 @@ class ItemReplaceListener : Listener {
             Material.FURNACE -> ItemRegistry.FURNACE
             Material.COPPER_INGOT -> ItemRegistry.COPPER_INGOT
             Material.IRON_INGOT -> ItemRegistry.IRON_INGOT
+            Material.DIAMOND -> ItemRegistry.DIAMOND
             Material.SPRUCE_SAPLING -> ItemRegistry.SAPLING
             Material.DIRT -> ItemRegistry.DIRT
             Material.COMPASS -> ItemRegistry.COMPASS

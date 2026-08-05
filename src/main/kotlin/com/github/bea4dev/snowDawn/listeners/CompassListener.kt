@@ -3,8 +3,10 @@ package com.github.bea4dev.snowDawn.listeners
 import com.github.bea4dev.snowDawn.SnowDawn
 import com.github.bea4dev.snowDawn.item.ItemRegistry
 import com.github.bea4dev.snowDawn.item.getItem
-import com.github.bea4dev.snowDawn.save.PlayerDataRegistry
+import com.github.bea4dev.snowDawn.save.ServerData
+import com.github.bea4dev.snowDawn.world.WorldRegistry
 import org.bukkit.Bukkit
+import org.bukkit.Location
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.Listener
@@ -14,11 +16,34 @@ import org.bukkit.event.inventory.InventoryDragEvent
 import org.bukkit.event.player.PlayerDropItemEvent
 import org.bukkit.event.player.PlayerRespawnEvent
 import org.bukkit.event.player.PlayerSwapHandItemsEvent
+import org.bukkit.inventory.ItemStack
+import org.bukkit.inventory.meta.CompassMeta
 
 object CompassInventory {
     const val SLOT = 8
+    private const val DESTINATION_X = 999
+    private const val DESTINATION_Y = 64
+    private const val DESTINATION_Z = 8
 
-    fun isLocked(player: Player): Boolean = PlayerDataRegistry[player].finishedTutorial
+    fun isLocked(player: Player): Boolean = true
+
+    fun createItemStack(): ItemStack {
+        val compass = ItemRegistry.COMPASS.createItemStack()
+        if (!ServerData.compassDestinationUnlocked) {
+            return compass
+        }
+
+        val meta = compass.itemMeta as CompassMeta
+        meta.lodestone = Location(
+            WorldRegistry.SNOW_LAND,
+            DESTINATION_X.toDouble(),
+            DESTINATION_Y.toDouble(),
+            DESTINATION_Z.toDouble()
+        )
+        meta.isLodestoneTracked = false
+        compass.itemMeta = meta
+        return compass
+    }
 
     fun ensure(player: Player) {
         if (!isLocked(player)) {
@@ -26,20 +51,20 @@ object CompassInventory {
         }
 
         val inventory = player.inventory
-        for (slot in 0 until inventory.storageContents.size) {
+        for (slot in inventory.storageContents.indices) {
             if (slot != SLOT && inventory.getItem(slot)?.getItem() == ItemRegistry.COMPASS) {
                 inventory.setItem(slot, null)
             }
         }
 
-        if (inventory.getItem(SLOT)?.getItem() == ItemRegistry.COMPASS) {
+        if (isCurrentCompass(inventory.getItem(SLOT))) {
             return
         }
 
         val displacedItem = inventory.getItem(SLOT)
         inventory.setItem(SLOT, null)
         if (displacedItem != null && !displacedItem.type.isAir) {
-            val availableSlot = (0 until inventory.storageContents.size)
+            val availableSlot = inventory.storageContents.indices
                 .firstOrNull { slot -> slot != SLOT && inventory.getItem(slot) == null }
             if (availableSlot == null) {
                 player.world.dropItemNaturally(player.location, displacedItem)
@@ -48,7 +73,25 @@ object CompassInventory {
             }
         }
 
-        inventory.setItem(SLOT, ItemRegistry.COMPASS.createItemStack())
+        inventory.setItem(SLOT, createItemStack())
+    }
+
+    private fun isCurrentCompass(item: ItemStack?): Boolean {
+        if (item?.getItem() != ItemRegistry.COMPASS || item.amount != 1) {
+            return false
+        }
+
+        val meta = item.itemMeta as? CompassMeta ?: return false
+        if (!ServerData.compassDestinationUnlocked) {
+            return !meta.hasLodestone()
+        }
+
+        val lodestone = meta.lodestone ?: return false
+        return lodestone.world == WorldRegistry.SNOW_LAND &&
+            lodestone.blockX == DESTINATION_X &&
+            lodestone.blockY == DESTINATION_Y &&
+            lodestone.blockZ == DESTINATION_Z &&
+            !meta.isLodestoneTracked
     }
 }
 

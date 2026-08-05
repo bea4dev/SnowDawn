@@ -13,6 +13,8 @@ object ServerData {
         private set
     var centerScenarioStarted = false
         private set
+    var compassDestinationUnlocked = false
+        private set
     val craftableItems = mutableListOf(
         ItemRegistry.SCRAP_PIPE.id,
         ItemRegistry.WOODEN_PICKAXE.id,
@@ -70,6 +72,11 @@ object ServerData {
             unlockedStoryMemos["snow_land"]?.contains(8) == true
         }
         centerScenarioStarted = yml.getBoolean("centerScenarioStarted", false)
+        compassDestinationUnlocked = if (yml.contains("compassDestinationUnlocked")) {
+            yml.getBoolean("compassDestinationUnlocked")
+        } else {
+            unlockedStoryMemos["snow_land"]?.contains(9) == true
+        }
 
         // craftableItems 読み込み（存在すれば上書き、無ければ現状維持＝デフォルトのまま）
         if (yml.contains("craftableItems")) {
@@ -104,6 +111,7 @@ object ServerData {
         yml.set("craftableItems", craftableItems)
         yml.set("theEndBgmUnlocked", theEndBgmUnlocked)
         yml.set("centerScenarioStarted", centerScenarioStarted)
+        yml.set("compassDestinationUnlocked", compassDestinationUnlocked)
 
         runCatching {
             file.parentFile?.mkdirs()
@@ -139,6 +147,17 @@ object ServerData {
         }
 
         centerScenarioStarted = true
+        save()
+        return true
+    }
+
+    @Synchronized
+    fun unlockCompassDestination(): Boolean {
+        if (compassDestinationUnlocked) {
+            return false
+        }
+
+        compassDestinationUnlocked = true
         save()
         return true
     }

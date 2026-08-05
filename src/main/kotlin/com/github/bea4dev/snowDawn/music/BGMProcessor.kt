@@ -50,21 +50,21 @@ object BGMRegistry {
         listOf(
             BGMTrack(
                 org.bukkit.Sound.MUSIC_NETHER_CRIMSON_FOREST.key(),
-                Component.text("Chrysopoeia"),
+                Component.text("Crimson Forest"),
                 Duration.ofSeconds(330),
                 1.0F,
                 1.0F,
             ),
             BGMTrack(
                 org.bukkit.Sound.MUSIC_NETHER_NETHER_WASTES.key(),
-                Component.text("Rubedo"),
+                Component.text("Nether Waste"),
                 Duration.ofSeconds(330),
                 1.0F,
                 1.0F,
             ),
             BGMTrack(
                 org.bukkit.Sound.MUSIC_NETHER_BASALT_DELTAS.key(),
-                Component.text("So Below"),
+                Component.text("Basalt Deltas"),
                 Duration.ofSeconds(330),
                 1.0F,
                 1.0F,
