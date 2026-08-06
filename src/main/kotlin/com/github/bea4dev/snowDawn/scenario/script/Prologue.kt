@@ -271,13 +271,6 @@ object Prologue : Scenario() {
         camera0.prepare()
         camera0.shake(false)
 
-        val camera1 = createCamera(player)
-        val camera1Positions = CameraPositionsManager.getCameraPositionsByName("tutorial_1")
-        camera1.setCameraPositions(camera1Positions)
-        camera1.setLookAtPositions(CameraPositionAt(SPAWN_POSITION))
-        camera1.prepare()
-        camera1.shake(false)
-
         delay(1.seconds)
 
         blackFeedIn(player, 2000)
@@ -291,6 +284,13 @@ object Prologue : Scenario() {
         delay(50.ticks.milliseconds)
 
         blackFeedIn(player, 1000)
+
+        val camera1 = createCamera(player)
+        val camera1Positions = CameraPositionsManager.getCameraPositionsByName("tutorial_1")
+        camera1.setCameraPositions(camera1Positions)
+        camera1.setLookAtPositions(CameraPositionAt(SPAWN_POSITION))
+        camera1.prepare()
+        camera1.shake(false)
 
         handle0.await()
 

@@ -95,7 +95,7 @@ object ItemRegistry {
     val IRON_INGOT = Item("iron_ingot", Material.IRON_INGOT, 0, 1, Text.ITEM_IRON_INGOT, listOf())
     val DIAMOND = Item("diamond", Material.DIAMOND, 0, 1, Text.ITEM_DIAMOND, listOf())
     val IRON_PICKAXE = Item("iron_pickaxe", Material.IRON_PICKAXE, 0, 1, Text.ITEM_IRON_PICKAXE, listOf())
-    val IRON_HOE = Item("iron_hoe", Material.IRON_HOE, 0, 1, Text.ITEM_IRON_HOE, listOf())
+    val IRON_HOE = Item("iron_hoe", Material.IRON_HOE, 0, 0, Text.ITEM_IRON_HOE, listOf())
     val IRON_SHOVEL = Item("iron_shovel", Material.IRON_SHOVEL, 0, 1, Text.ITEM_IRON_SHOVEL, listOf())
     val IRON_AXE = Item("iron_axe", Material.IRON_AXE, 0, 1, Text.ITEM_IRON_AXE, listOf())
     val COMPASS = Item(

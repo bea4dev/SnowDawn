@@ -233,6 +233,8 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 1 },
                     ItemRegistry.FUEL.createItemStack().also { item -> item.amount = 4 },
                     ItemRegistry.BLUE_PRINT_STURDY_PIPE.createItemStack(),
+                    ItemRegistry.DIAMOND.createItemStack().also { item -> item.amount = 1 },
+                    ItemRegistry.IRON_INGOT.createItemStack().also { item -> item.amount = 1 },
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },
@@ -254,6 +256,8 @@ class SnowLand internal constructor(seed: Long) : ChunkGenerator() {
                     ItemRegistry.SCRAP.createItemStack().also { item -> item.amount = 3 },
                     ItemRegistry.BLUE_PRINT_CATALYST.createItemStack(),
                     ItemRegistry.BLUE_PRINT_STURDY_PIPE.createItemStack(),
+                    ItemRegistry.DIAMOND.createItemStack().also { item -> item.amount = 1 },
+                    ItemRegistry.IRON_INGOT.createItemStack().also { item -> item.amount = 2 },
                 ),
                 listOf(
                     ItemRegistry.COAL.createItemStack().also { item -> item.amount = 1 },

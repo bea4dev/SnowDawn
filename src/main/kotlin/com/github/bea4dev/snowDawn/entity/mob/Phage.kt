@@ -35,9 +35,9 @@ enum class PhageTier(
     val armor: Material,
 ) {
     TIER_1(10.0F, 2.0F, Material.AIR),
-    TIER_2(10.0F, 8.0F, Material.STONE),
-    TIER_3(20.0F, 8.0F, Material.DEEPSLATE),
-    TIER_4(40.0F, 16.0F, Material.BEDROCK),
+    TIER_2(20.0F, 8.0F, Material.STONE),
+    TIER_3(40.0F, 8.0F, Material.DEEPSLATE),
+    TIER_4(80.0F, 16.0F, Material.BEDROCK),
 }
 
 class Phage(
